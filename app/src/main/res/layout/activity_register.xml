@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            // 로고
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_marginLeft="95dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                app:srcCompat="@drawable/temp1"
+                tools:layout_editor_absoluteX="115dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            // 아이디(이메일) 입력창
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="0dp"
+                android:text="이메일"
+                android:textColor="@color/corlorText"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="158dp" />
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="179dp" />
+
+            // 비밀번호 입력창
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="비밀번호"
+                android:textColor="@color/corlorText"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="245dp" />
+            <EditText
+                android:id="@+id/pwdText"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="264dp" />
+
+            // 닉네임 입력창
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="닉네임"
+                android:textColor="@color/corlorText"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="338dp" />
+            <EditText
+                android:id="@+id/nicknameText"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="357dp" />
+
+            // 이름 입력창
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="이름"
+                android:textColor="@color/corlorText"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="447dp" />
+            <EditText
+                android:id="@+id/nameText"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="466dp" />
+
+            // 연락처 입력창
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="연락처"
+                android:textColor="@color/corlorText"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="552dp" />
+            <EditText
+                android:id="@+id/phoneText"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="47dp"
+                tools:layout_editor_absoluteY="571dp" />
+
+            <LinearLayout
+                android:layout_width="340dp"
+                android:layout_height="27dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                // 프로필사진 등록창
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="17dp"
+                    android:layout_marginRight="30dp"
+                    android:text="프로필사진"
+                    android:textColor="@color/corlorText"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/galleryButton"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cameraButton" />
+
+                // 갤러리 버튼
+                <ImageView
+                    android:id="@+id/galleryButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/gallery" />
+
+                // 카메라 버튼
+                <ImageView
+                    android:id="@+id/cameraButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/galleryButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/camera" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/profileView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:srcCompat="@drawable/profile" />
+
+            <LinearLayout
+                android:layout_width="340dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                // 가입 버튼
+                <Button
+                    android:id="@+id/okBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorMain"
+                    android:shadowColor="@android:color/transparent"
+                    android:text="가입"
+                    android:textSize="20sp" />
+
+                // 취소 버튼
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="#b0b0b0"
+                    android:shadowColor="@android:color/transparent"
+                    android:text="취소"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
