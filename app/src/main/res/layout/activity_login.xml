@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".LoginActivity">
 
     // 로고
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="250dp"
@@ -25,6 +27,7 @@
         app:srcCompat="@drawable/temp1" />
 
     // 아이디 입력창
+
     <EditText
         android:id="@+id/editText"
         android:layout_width="250dp"
@@ -44,6 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     // 비밀번호 입력창
+
     <EditText
         android:id="@+id/editText2"
         android:layout_width="250dp"
@@ -74,7 +78,7 @@
         android:background="@color/colorMain"
         android:shadowColor="@android:color/transparent"
         android:text="로그인"
-        android:textColor="@color/corlorText"
+        android:textColor="@color/colorText"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/registerButton"
@@ -84,8 +88,10 @@
         app:layout_constraintVertical_bias="0.0" />
 
     // 회원가입 버튼
+
     <Button
         android:id="@+id/registerButton"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="115dp"
         android:layout_height="40dp"
         android:layout_marginTop="13dp"
@@ -94,10 +100,9 @@
         android:background="@color/colorMain"
         android:shadowColor="@android:color/transparent"
         android:text="회원가입"
-        android:textColor="@color/corlorText"
+        android:textColor="@color/colorText"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
-        style="?android:attr/borderlessButtonStyle"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
 </android.support.constraint.ConstraintLayout>

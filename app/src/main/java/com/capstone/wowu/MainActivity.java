@@ -37,6 +37,16 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // 운동정보 메뉴
+        ImageView exercise_info = (ImageView)findViewById(R.id.exercise_info);
+        exercise_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InfoListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

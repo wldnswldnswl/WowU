@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RegisterActivity">
 
     <ScrollView
@@ -45,7 +46,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginBottom="0dp"
                 android:text="이메일"
-                android:textColor="@color/corlorText"
+                android:textColor="@color/colorText"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="158dp" />
@@ -67,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="비밀번호"
-                android:textColor="@color/corlorText"
+                android:textColor="@color/colorText"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="245dp" />
@@ -89,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="닉네임"
-                android:textColor="@color/corlorText"
+                android:textColor="@color/colorText"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="338dp" />
@@ -111,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="이름"
-                android:textColor="@color/corlorText"
+                android:textColor="@color/colorText"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="447dp" />
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="연락처"
-                android:textColor="@color/corlorText"
+                android:textColor="@color/colorText"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="552dp" />
@@ -163,7 +164,7 @@
                     android:layout_marginEnd="17dp"
                     android:layout_marginRight="30dp"
                     android:text="프로필사진"
-                    android:textColor="@color/corlorText"
+                    android:textColor="@color/colorText"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@+id/galleryButton"
                     app:layout_constraintHorizontal_bias="0.0"

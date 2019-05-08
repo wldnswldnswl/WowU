@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorMain">#ffd685</color>     // 대표테마색
-    <color name="corlorText">#5E5E5E</color>    // 자주 쓰이는 글씨색 (회색)
+    <color name="colorText">#5E5E5E</color>    // 자주 쓰이는 글씨색 (회색)
 </resources>
