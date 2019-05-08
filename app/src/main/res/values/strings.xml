@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HomePT</string>
+    <string name="app_name">WowU</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,4 +8,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_temp">tempActivity</string>
+    <!--로그인-->
+    <string name="id">ID</string>
+    <string name="password">PW</string>
+    <string name="signin_email">회원가입 및 이메일 로그인</string>
+    <string name="signup_complete">회원가입 성공</string>
+    <string name="signin_complete">로그인 성공</string>
+    <string name="signout">로그아웃</string>
+    <string name="signout_success">로그아웃 성공</string>
+    <string name="signout_fail">로그아웃 실패</string>
+    <string name="signout_fail_null">아이디와 비밀번호를 입력해주세요</string>
+
 </resources>
