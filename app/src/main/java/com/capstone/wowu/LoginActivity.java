@@ -7,14 +7,17 @@ import android.view.View;
 import android.widget.Button;
 
 import com.capstone.wowu.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mAuth=FirebaseAuth.getInstance();
         // 로그인 버튼
         Button button1 = (Button)findViewById(R.id.loginButton);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -34,5 +37,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
+        updateUI(currentUser);
     }
 }
