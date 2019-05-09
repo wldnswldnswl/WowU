@@ -38,9 +38,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void onStart(){
-        super.onStart();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
 }
