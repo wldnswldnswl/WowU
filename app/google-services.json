@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "129050845731",
+    "firebase_url": "https://wowu-6e627.firebaseio.com",
+    "project_id": "wowu-6e627",
+    "storage_bucket": "wowu-6e627.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129050845731:android:691c84a1b9504976",
+        "android_client_info": {
+          "package_name": "com.capstone.wowu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129050845731-8pgpjoh51mu5dfqn886ehtrjq99v24un.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy0cZV8idr_AgFThBW5OxJGkIHk2ldlUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129050845731-8pgpjoh51mu5dfqn886ehtrjq99v24un.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

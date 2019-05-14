@@ -1,8 +1,5 @@
 package com.capstone.wowu;
 
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 public class infoItem {
     String image;
     String name;

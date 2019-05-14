@@ -22,7 +22,6 @@ public class InfoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_list);
 
-
         // 툴바(상단바) 설정
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -36,9 +35,13 @@ public class InfoListActivity extends AppCompatActivity {
         infoListView = (ListView) findViewById(R.id.infoListView);
         infoList = new ArrayList<infoItem>();
         infoList.add(new infoItem("squats", "스쿼트(Squats)"));
+        infoList.add(new infoItem("wide_squats", "와이드 스쿼트(Wide Squats)"));
         infoList.add(new infoItem("plank", "플랭크(Plank)"));
+        infoList.add(new infoItem("side_plank", "사이드 플랭크(Side Plank)"));
+        infoList.add(new infoItem("side_hipkick", "사이드 힙 킥(Side Hip Kick)"));
         infoList.add(new infoItem("v_up", "V업(V-Up)"));
-        infoList.add(new infoItem("cobra", "코브라자세(Bhujangasana)"));
+        infoList.add(new infoItem("cobra", "코브라 자세(Bhujangasana)"));
+        infoList.add(new infoItem("cat", "고양이 자세(Marjaryasana)"));
 
         adapter = new InfoListAdapter(getApplicationContext(), infoList);
         infoListView.setAdapter(adapter);
