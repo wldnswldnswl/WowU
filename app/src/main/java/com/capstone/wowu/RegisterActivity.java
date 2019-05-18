@@ -20,36 +20,67 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.capstone.wowu.MemberInfo;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RegisterActivity extends AppCompatActivity{
+public class RegisterActivity extends BaseActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 672;
-    private static final String TAG="EmailPassword";
+    private static final String TAG = "RegisterActivity";
     private String imageFilePath;
     private Uri photoUri;
-
-    private EditText mEmailField;
-    private EditText mPasswordField;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private DatabaseReference mDatabase;
+    private RelativeLayout loaderLayout;
+    private EditText userEmail;
+    private EditText userPwd;
+    private EditText nickName;
+    private EditText userName;
+    private EditText phoneNum;
+
+    private String profilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        //Views
+        userEmail = findViewById(R.id.emailText);
+        userPwd = findViewById(R.id.pwdText);
+        nickName = findViewById(R.id.nicknameText);
+        userName = findViewById(R.id.nameText);
+        phoneNum = findViewById(R.id.phoneText);
 
         // 권한체크
         TedPermission.with(getApplicationContext())
@@ -62,15 +93,15 @@ public class RegisterActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getPackageManager()) != null){
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     File photoFile = null;
                     try {
                         photoFile = createImageFile();
-                    } catch(IOException e) {
+                    } catch (IOException e) {
 
                     }
 
-                    if(photoFile != null){
+                    if (photoFile != null) {
                         photoUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName(), photoFile);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);     // 카메라 기능 띄우기
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
@@ -80,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity{
         });
 
         // 취소 버튼
-        Button button4 = (Button)findViewById(R.id.cancelBtn);
+        Button button4 = (Button) findViewById(R.id.cancelBtn);
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,10 +120,11 @@ public class RegisterActivity extends AppCompatActivity{
         });
 
         // 가입 버튼
-        Button button3 = (Button)findViewById(R.id.okBtn);
-        button3.setOnClickListener(new View.OnClickListener(){
+        Button button3 = (Button) findViewById(R.id.okBtn);
+        button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                signUp();
                 Toast.makeText(RegisterActivity.this, "회원가입 완료", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -100,77 +132,174 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
-        updateUI(currentUser);
+
+        // Check auth on Activity start
+        if (mAuth.getCurrentUser() != null) {
+            onAuthSuccess(mAuth.getCurrentUser());
+        }
     }
 
-    public void createAccount(String email, String password){
-        Log.d(TAG,"회원가입:"+email);
-        if(!validateForm()){
+    private void signUp() {
+        Log.d(TAG, "signUp");
+        if (!validateForm()) {
             return;
         }
 
-        //이메일로 사용자 생성
+        showProgressDialog();
+        String email = userEmail.getText().toString();
+        String password = userPwd.getText().toString();
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // 가입 성공 시 , 사용자 정보 업데이트
-                            Log.d(TAG, "가입 성공~!");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // 가입 실패 시 메시지.
-                            Log.w(TAG, "가입 실패..", task.getException());
-                            Toast.makeText(RegisterActivity.this, "인증 실패.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                        Log.d(TAG, "createUser:onComplete:" + task.isSuccessful());
+                        hideProgressDialog();
 
-                        // [START_EXCLUDE]
-                        // [END_EXCLUDE]
+                        if (task.isSuccessful()) {
+                            onAuthSuccess(task.getResult().getUser());
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "회원가입 실패",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
-    private void signOut(){
-        mAuth.signOut();
-        updateUI(null);
-    }
+    private void storageUploader() {
+        final String email = ((EditText) findViewById(R.id.emailText)).getText().toString();
+        final String password = ((EditText) findViewById(R.id.pwdText)).getText().toString();
+        final String nickname = ((EditText) findViewById(R.id.nicknameText)).getText().toString();
+        final String username = ((EditText) findViewById(R.id.nameText)).getText().toString();
+        final String phonenum = ((EditText) findViewById(R.id.phoneText)).getText().toString();
 
-    private boolean validateForm(){
-        boolean valid=true;
-        String email=mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        final StorageReference mountainImagesRef = storageRef.child("users/" + user.getUid() + "/profileImage.jpg");
+
+        if (profilePath == null) {
+            MemberInfo memberInfo = new MemberInfo(email, password, nickname, username, phonenum);
+            storeUploader(memberInfo);
         } else {
-            mEmailField.setError(null);
+            try {
+                InputStream stream = new FileInputStream(new File(profilePath));
+                UploadTask uploadTask = mountainImagesRef.putStream(stream);
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return mountainImagesRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            MemberInfo memberInfo = new MemberInfo(email, password, nickname, username, phonenum);
+                            storeUploader(memberInfo);
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "회원가입 실패",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } catch (FileNotFoundException e) {
+                Log.e("로그", "에러: " + e.toString());
+            }
         }
+    }
 
-        String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
-            valid = false;
+    private void storeUploader(MemberInfo memberInfo) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(user.getUid()).set(memberInfo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(RegisterActivity.this, "회원가입 성공",
+                                Toast.LENGTH_SHORT).show();
+                        loaderLayout.setVisibility(View.GONE);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegisterActivity.this, "회원가입 실패",
+                                Toast.LENGTH_SHORT).show();
+                        loaderLayout.setVisibility(View.GONE);
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    private void onAuthSuccess(FirebaseUser user) {
+        nickName = findViewById(R.id.nicknameText);
+        Log.d(TAG, "onAuthSuccess: "+nickName);
+        String nickname = nickName.toString();
+        // Write new user
+        writeNewUser(user.getUid(), nickname, user.getEmail());
+
+        // Go to MainActivity
+        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+        finish();
+    }
+
+
+    private boolean validateForm() {
+        boolean result = true;
+        if (TextUtils.isEmpty(userEmail.getText().toString())) {
+            userEmail.setError("Required");
+            result = false;
         } else {
-            mPasswordField.setError(null);
+            userEmail.setError(null);
         }
 
-        return valid;
-    }
-
-    private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
-
-            findViewById(R.id.loginButton).setVisibility(View.GONE);
-            findViewById(R.id.emailText).setVisibility(View.GONE);
-            findViewById(R.id.okBtn).setVisibility(View.VISIBLE);
-
+        if (TextUtils.isEmpty(userPwd.getText().toString())) {
+            userPwd.setError("Required");
+            result = false;
+        } else {
+            userPwd.setError(null);
         }
+
+        if(TextUtils.isEmpty(nickName.getText().toString())){
+            nickName.setError("Required");
+            result=false;
+        }
+        else{
+            nickName.setError(null);
+        }
+
+        if(TextUtils.isEmpty(userName.getText().toString())){
+            userName.setError("Required");
+            result=false;
+        }
+        else{
+            userName.setError(null);
+            result=false;
+        }
+
+        if(TextUtils.isEmpty(phoneNum.getText().toString())){
+            phoneNum.setError("Required");
+            result=false;
+        }
+        else{
+            phoneNum.setError(null);
+            result=false;
+        }
+        return result;
     }
+
+    // [START basic_write]
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+    }
+    // [END basic_write]
 
     // 이하로는 카메라 촬영 관련된 코드
 
@@ -179,8 +308,8 @@ public class RegisterActivity extends AppCompatActivity{
         String imageFileName = "TEST_"+timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-          imageFileName,
-          ".jpg",
+                imageFileName,
+                ".jpg",
                 storageDir
         );
         imageFilePath = image.getAbsolutePath();
