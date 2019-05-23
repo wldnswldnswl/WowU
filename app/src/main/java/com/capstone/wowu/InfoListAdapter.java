@@ -56,7 +56,7 @@ public class InfoListAdapter extends BaseAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, InfoActivity.class).putExtra("name", infoList.get(position).getName()));
+                context.startActivity(new Intent(context, InfoActivity.class).putExtra("name", infoList.get(position).getName()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
         return v;
