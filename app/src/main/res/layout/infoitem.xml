@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="스쿼트(Squats)"
             android:padding="10dp"
             android:textColor="@color/colorText"
             android:id="@+id/infoText"/>
@@ -28,8 +27,7 @@
             android:id="@+id/infoImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/squats" />
+            android:adjustViewBounds="true" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,18 +1,27 @@
 package com.capstone.wowu;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 public class InfoListAdapter extends BaseAdapter {
     private Context context;
     private List<infoItem> infoList;
+    TextView infoText;
+    ImageView infoImage;
 
     public InfoListAdapter(Context context, List<infoItem> infoList) {
         this.context = context;
@@ -35,16 +44,21 @@ public class InfoListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.infoitem, null);
-        TextView infoText = (TextView)v.findViewById(R.id.infoText);
-        ImageView infoImage = (ImageView)v.findViewById(R.id.infoImage);
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://wowu-6e627.appspot.com").child("exercise/"+infoList.get(position).getImage());
 
+        infoText = (TextView)v.findViewById(R.id.infoText);
+        infoImage = (ImageView)v.findViewById(R.id.infoImage);
         infoText.setText(infoList.get(position).getName());
-        int id = context.getResources().getIdentifier(infoList.get(position).getImage(),  "drawable", context.getPackageName());
-        Drawable drawable = context.getResources().getDrawable(id);
-        infoImage.setImageDrawable(drawable);
-
+        Glide.with(context).load(storageRef).into(infoImage);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, InfoActivity.class).putExtra("name", infoList.get(position).getName()));
+            }
+        });
         return v;
     }
 }

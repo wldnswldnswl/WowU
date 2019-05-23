@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
 import android.widget.ImageView;
 
+import ai.fritz.core.Fritz;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @Override
@@ -38,12 +40,34 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Initialize Fritz
+        Fritz.configure(this, "");
+
+        // 트레이닝 메뉴
+        ImageView training = (ImageView)findViewById(R.id.training);
+        training.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.startPoseEstimation(v.getContext());
+            }
+        });
+
         // 운동정보 메뉴
         ImageView exercise_info = (ImageView)findViewById(R.id.exercise_info);
         exercise_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InfoListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 커뮤니티 메뉴
+        ImageView community = (ImageView)findViewById(R.id.community);
+        community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,7 +101,7 @@ public class MainActivity extends AppCompatActivity
             // 고객센터 메뉴
         } else if (id == R.id.nav_logout) {
             // 로그아웃 메뉴
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, LogoutActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
