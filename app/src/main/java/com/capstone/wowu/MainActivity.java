@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+
+
     @Override
     // 뒷배경 누르면 사이드바 닫음
     public void onBackPressed() {
