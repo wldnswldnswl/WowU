@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,4 +10,120 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="ai.fritz.heartbeat.activities.BaseaActivity" />
+
+    <LinearLayout
+        android:id="@+id/pose_select"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_container"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/pose_select_button"
+            android:layout_width="108dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/camera_container"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/pose"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:src="@drawable/pose2"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="300dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/pose_select_name"
+                android:layout_width="302dp"
+                android:layout_height="match_parent"
+                android:background="#80000000"
+                android:visibility="invisible">
+
+                <Button
+                    android:id="@+id/v_up"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="v업" />
+
+                <Button
+                    android:id="@+id/marjaryasana"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="고양이 자세" />
+
+                <Button
+                    android:id="@+id/side_plank"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="사이드 플랭크" />
+
+                <Button
+                    android:id="@+id/side_hip_kick"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="사이드힙킥" />
+
+                <Button
+                    android:id="@+id/squat"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="스쿼트" />
+
+                <Button
+                    android:id="@+id/sphinx_pose"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="스핑크스" />
+
+                <Button
+                    android:id="@+id/wide_squat"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="와이드 스쿼트" />
+
+                <Button
+                    android:id="@+id/bhujangasana"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="코브라 자세" />
+
+                <Button
+                    android:id="@+id/plank"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="플랭크" />
+
+                <Button
+                    android:id="@+id/dhanurasana"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="활 자세" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

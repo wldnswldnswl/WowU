@@ -16,7 +16,10 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public abstract class BaseCameraActivity extends Activity implements OnImageAvailableListener {
@@ -34,6 +37,10 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
     private HandlerThread handlerThread;
 
     protected String cameraId;
+    private ImageView poseSelect;
+    private LinearLayout poseName;
+    private int flag=0;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -48,6 +55,23 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
         } else {
             requestPermission();
         }
+
+        poseSelect = findViewById(R.id.pose);
+        poseName = findViewById(R.id.pose_select_name);
+
+        poseSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag==0) {
+                    flag = 1;
+                    poseName.setVisibility(View.VISIBLE);
+                }
+                else {
+                    flag=0;
+                    poseName.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -248,5 +272,4 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
 
     protected abstract Size getDesiredPreviewFrameSize();
 }
-
 
