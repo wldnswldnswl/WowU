@@ -338,9 +338,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
                         }
                     });
-        } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
+        //else {
+        //    Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
+        //}
     }
 
     private void uploadCameraFile() {

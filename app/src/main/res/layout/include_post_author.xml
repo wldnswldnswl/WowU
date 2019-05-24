@@ -19,6 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
+        android:fontFamily="@font/nanum_square"
+        android:textStyle="bold"
         tools:text="someauthor@email.com" />
 
 </LinearLayout>

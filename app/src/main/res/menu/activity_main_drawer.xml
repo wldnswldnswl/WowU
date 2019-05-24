@@ -7,14 +7,17 @@
         <item
             android:id="@+id/nav_mypage"
             android:icon="@drawable/mypage"
+            android:textStyle="bold"
             android:title="마이페이지" />
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/notification"
+            android:textStyle="bold"
             android:title="알림" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/setting"
+            android:textStyle="bold"
             android:title="설정" />
     </group>
 
@@ -22,10 +25,12 @@
         <item
             android:id="@+id/nav_call"
             android:icon="@drawable/call"
+            android:textStyle="bold"
             android:title="고객센터" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"
+            android:textStyle="bold"
             android:title="로그아웃" />
     </group>
 

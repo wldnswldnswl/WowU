@@ -30,6 +30,7 @@
                 android:layout_gravity="center"
                 android:text="WowU"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="30sp" />
         </android.support.v7.widget.Toolbar>
 

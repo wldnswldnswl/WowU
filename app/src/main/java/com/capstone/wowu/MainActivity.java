@@ -1,8 +1,11 @@
 package com.capstone.wowu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import ai.fritz.core.Fritz;
 
@@ -39,6 +55,45 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        NavigationView nav_view = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        final TextView user_nickname = (TextView)hView.findViewById(R.id.nickname);
+        final TextView user_email = (TextView)hView.findViewById(R.id.email);
+        final ImageView profile = (ImageView)hView.findViewById(R.id.profile);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    String image = dataSnapshot.child("image").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    String nickname = dataSnapshot.child("nickname").getValue(String.class);
+                    StorageReference storageRef = storage.getReferenceFromUrl("gs://wowu-6e627.appspot.com").child("user-images/"+image);
+
+                    if(image != null)
+                        Glide.with(getApplicationContext()).load(storageRef).apply(RequestOptions.circleCropTransform()).into(profile);
+                    else {
+                        profile.setColorFilter(Color.parseColor("#A6A6A6"), PorterDuff.Mode.SRC);
+                    }
+                    user_nickname.setText(nickname);
+                    user_email.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        progressDialog.dismiss();
 
         // Initialize Fritz
         Fritz.configure(this, "");

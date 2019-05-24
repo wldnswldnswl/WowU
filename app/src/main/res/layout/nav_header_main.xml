@@ -15,7 +15,7 @@
 
     // 프로필 사진
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
@@ -23,18 +23,21 @@
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     // 닉네임
+
     <TextView
+        android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textStyle="bold"
+        android:textColor="@color/colorText" />
 
     // 아이디(이메일주소)
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle" />
+        android:textStyle="bold"
+        android:textColor="@color/colorText" />
 
 </LinearLayout>

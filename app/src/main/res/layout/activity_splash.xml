@@ -10,7 +10,7 @@
 
     // 로고
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profile"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"

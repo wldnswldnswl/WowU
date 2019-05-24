@@ -40,13 +40,14 @@
 
             // 아이디(이메일) 입력창
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginBottom="0dp"
                 android:text="이메일"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="158dp" />
@@ -69,6 +70,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="비밀번호"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="245dp" />
@@ -91,6 +93,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="닉네임"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="338dp" />
@@ -113,6 +116,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="이름"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="447dp" />
@@ -135,6 +139,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="연락처"
                 android:textColor="@color/colorText"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="552dp" />
@@ -165,6 +170,7 @@
                     android:layout_marginRight="30dp"
                     android:text="프로필사진"
                     android:textColor="@color/colorText"
+                    android:textStyle="bold"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@+id/galleryButton"
                     app:layout_constraintHorizontal_bias="0.0"

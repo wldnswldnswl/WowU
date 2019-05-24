@@ -23,11 +23,13 @@
             android:id="@+id/commentAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/commentBody"
             style="@style/TextAppearance.AppCompat.Small"
+            android:fontFamily="@font/nanum_square"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
