@@ -100,10 +100,11 @@ public class MainActivity extends AppCompatActivity
 
         // 트레이닝 메뉴
         ImageView training = (ImageView)findViewById(R.id.training);
-        training.setOnClickListener(new View.OnClickListener() {
+        training.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Navigation.startPoseEstimation(v.getContext());
+                Intent intent=new Intent(getApplicationContext(),TutorialActivity.class);
+                startActivity(intent);
             }
         });
 

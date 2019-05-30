@@ -25,17 +25,50 @@
         android:layout_height="wrap_content"
         android:text="@string/switchCamera" />
 
-        <com.capstone.wowu.view.AutoFitTextureView
-            android:id="@+id/texture"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_info_view" />
+    <com.capstone.wowu.view.AutoFitTextureView
+        android:id="@+id/texture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_info_view" />
 
-        <com.capstone.wowu.view.DrawView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bottom_info_view"
-            android:background="@android:color/transparent" />
+    <com.capstone.wowu.view.DrawView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_info_view"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/text_count"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="320dp"
+        android:layout_toEndOf="@+id/switchCameraButton"
+        android:text="10"
+        android:textColor="@color/colorRed"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/text_countPose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="11dp"
+        android:text="0"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="159dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginBottom="345dp"
+        android:text="자세인식중"
+        android:textColor="@color/colorRed"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:id="@+id/bottom_info_view"
@@ -56,6 +89,33 @@
             android:padding="0dp"
             android:src="@drawable/pose2"
             tools:ignore="MissingConstraints" />
+
+        <!--<수정>해원-세트 수 입력 버튼-->
+        <LinearLayout
+            android:id="@+id/set_count_input"
+            android:visibility="invisible"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
+
+            <EditText
+                android:id="@+id/set_num"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:hint="세트 수"/>
+
+            <EditText
+                android:id="@+id/set_count"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:hint="횟수"/>
+            <Button
+                android:id="@+id/set_input"
+                android:layout_width="63dp"
+                android:layout_height="35dp"
+                android:text="입력"/>
+        </LinearLayout>
 
         <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"

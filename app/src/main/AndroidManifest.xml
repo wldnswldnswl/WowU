@@ -34,6 +34,7 @@
         <activity android:name="com.capstone.wowu.BaseActivity" />
         <activity android:name="com.capstone.wowu.NewPostActivity" />
         <activity android:name="com.capstone.wowu.PostDetailActivity" />
+        <activity android:name="com.capstone.wowu.TutorialActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

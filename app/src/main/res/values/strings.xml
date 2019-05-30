@@ -56,4 +56,17 @@
         ]]>
     </string>
     <string name="threads">Threads:</string>
+
+    <!--주희 운동정보 음성으로 출력-->
+    <string name="v_up_info">팔이 다리와 평행이 되도록 유의하세요. 등은 바닥과 45도가 되게 유지하세요. 복부에 힘을 주도록 집중하세요.</string>
+    <string name="marjaryasana_info">발등이 들리지 않도록 주의하세요. 손목에 체중이 실리지 않도록 유의하시고, 손바닥 전체로 바닥을 눌러주세요.</string>
+    <string name="side_plank_info">팔과 바닥의 각도는 90도를 유지하고 고개를 떨구지 않도록 유의하세요</string>
+    <string name="side_hip_kick_info">어깨와 팔꿈치를 일자로 만들어주시고 팔과 바닥의 각도는 90도가 되도록 하세요. 상체를 곧게 펴 귀를 어깨에서 떼세요.</string>
+    <string name="squat_info">발뒤꿈치를 올리지 마시고 상체를 똑바로 세워 허리의 등뼈를 아치형태로 유지하세요. 무게중심이 앞으로 쏠리지 않도록 주의하시고 엉덩이를 뒤로 빼세요</string>
+    <string name="sphinx_pose_info">척추를 펴는 느낌에 집중하세요</string>
+    <string name="wide_squat_info">허리가 앞으로 숙여지거나 뒤로 젖혀지지 않도록 주의하세요</string>
+    <string name="bhujangasana_info">상체를 들어올릴때 어깨가 같이 올라가지 않도록 주의하시고 엉덩이 근육을 수축시키는데 집중하세요</string>
+    <string name="plank_info">팔과 바닥이 90도를 유지해야 하며 허리를 곱게 펴주세요. 몸이 일직선이 되도록 허리를 올리고 엉덩이를 내리는데 집중하세요</string>
+    <string name="dhanurasana_info">상체의 각도와 다리의 각도가 일치하도록 해주세요.</string>
+
 </resources>
