@@ -5,4 +5,10 @@
     <color name="colorAccent">#DAF881</color>
     <color name="colorMain">#DAF881</color>     // 대표테마색
     <color name="colorText">#5E5E5E</color>    // 자주 쓰이는 글씨색 (회색)
+
+    <!-- demo -->
+    <color name="control_background">#cc4285f4</color>
+    <color name="selection_highlight">#aaaaaa</color>
+    <color name="selection_focus">#eeaa55</color>
+    <color name="item_normal">#eeeeee</color>
 </resources>

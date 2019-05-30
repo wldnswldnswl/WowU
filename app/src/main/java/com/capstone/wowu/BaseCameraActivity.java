@@ -16,7 +16,6 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,6 +55,7 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
             requestPermission();
         }
 
+        /*
         poseSelect = findViewById(R.id.pose);
         poseName = findViewById(R.id.pose_select_name);
 
@@ -72,6 +72,7 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
                 }
             }
         });
+        */
     }
 
     @Override

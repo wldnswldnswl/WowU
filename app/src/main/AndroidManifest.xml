@@ -45,15 +45,6 @@
             android:parentActivityName="com.capstone.wowu.MainActivity"
             android:screenOrientation="portrait" />
 
-        <meta-data
-            android:name="fritz_api_key"
-            android:value="e1aa00156aa541a6b8f24ec2eb8363a9" />
-
-        <service
-            android:name="ai.fritz.core.FritzCustomModelService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.capstone.wowu"

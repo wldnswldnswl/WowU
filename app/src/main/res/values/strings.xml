@@ -24,4 +24,36 @@
     <string name="heading_my_posts">내 작성글</string>
     <string name="heading_my_top_posts">내 베스트글</string>
     <string name="menu_logout">Log out</string>
+
+    <!-- demo -->
+    <string name="picture">Picture</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">This sample needs camera permission.</string>
+    <string name="toggle_turn_on">NN:On</string>
+    <string name="toggle_turn_off">NN:Off</string>
+    <string name="toggle">Use NNAPI</string>
+    <string name="tflite">tflite</string>
+    <string name="nnapi">NNAPI</string>
+    <string name="gpu">GPU</string>
+    <string name="cpu">CPU</string>
+    <string name="modelLabel">Model</string>
+    <string name="deviceLabel">Device</string>
+    <string name="mobilenetV1Quant">mobilenet v1 quant</string>;
+    <string name="mobilenetV1Float">mobilenet v1 float</string>;;
+    <string name="poseMatching">포즈 매칭 하기</string>
+    <string name="uploadImage">이미지 업로드</string>
+    <string name="switchCamera">카메라 전환</string>
+    <string name="registerPose">포즈 등록</string>
+    <string name="listPose">포즈 리스트</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+            This sample demonstrates the basic use of TfLite API. Check the source code to see how
+            you can use TfLite for efficient, on-device inference with trained TensorFlow models.
+
+
+        ]]>
+    </string>
+    <string name="threads">Threads:</string>
 </resources>
