@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/ab_gradient">
 
         // 어플 이름
         <TextView
@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="커뮤니티"
-            android:textColor="@color/colorText"
+            android:textColor="#ffffff"
+
             android:textStyle="bold"
             android:textSize="30sp" />
 

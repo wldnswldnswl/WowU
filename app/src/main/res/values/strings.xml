@@ -68,5 +68,6 @@
     <string name="bhujangasana_info">상체를 들어올릴때 어깨가 같이 올라가지 않도록 주의하시고 엉덩이 근육을 수축시키는데 집중하세요</string>
     <string name="plank_info">팔과 바닥이 90도를 유지해야 하며 허리를 곱게 펴주세요. 몸이 일직선이 되도록 허리를 올리고 엉덩이를 내리는데 집중하세요</string>
     <string name="dhanurasana_info">상체의 각도와 다리의 각도가 일치하도록 해주세요.</string>
+    <string name="my_preference_key"></string>
 
 </resources>

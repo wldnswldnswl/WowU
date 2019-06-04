@@ -17,7 +17,7 @@
             android:background="@color/colorPrimary"
             android:fontFamily="@font/nanum_square"
             android:padding="10dp"
-            android:textColor="@color/colorText"
+            android:textColor="#ffffff"
             android:textStyle="bold" />
     </LinearLayout>
 

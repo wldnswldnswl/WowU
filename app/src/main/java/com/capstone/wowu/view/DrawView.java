@@ -32,7 +32,7 @@ public class DrawView extends View{
     private static int count = 0;
     private static int count1 = 0;
 
-    static View myView;
+    public static View myView;
     private Paint paint[] = new Paint[14];
     private Paint ppaint;
     private static float[][] arr = new float[14][2];
@@ -97,7 +97,7 @@ public class DrawView extends View{
         return Math.atan2(dy, dx) * (180.0 / Math.PI);
     }
     /*스쿼트*/
-    /*public static void squatPose(){
+  /*  protected void squartPose(){
 
         //높이차
         float heightRight=arr[11][0]-arr[12][0];
@@ -142,7 +142,6 @@ public class DrawView extends View{
 
     /*스쿼트*/
     public static void squatPose() {
-
         //높이차
         float heightRight = arr[11][0] - arr[12][0];
         float heigtLeft = arr[8][0] - arr[9][0];
@@ -150,11 +149,15 @@ public class DrawView extends View{
         //무릎-발목: 8번(11번)의 y위치를 9번(12번)과 같게
         double len8_9 = Math.sqrt(Math.pow((arr[8][1] - arr[9][1]), 2) + Math.pow((arr[8][0] - arr[9][0]), 2));
         arr[8][0] = arr[9][0];
-        arr[8][1] = arr[9][1] + (float) len8_9;
+        arr[8][1] = arr[9][1] + (float) len8_9; //왼쪽 측면 그려질 때
 
         double len11_12 = Math.sqrt(Math.pow((arr[11][1] - arr[12][1]), 2) + Math.pow((arr[11][0] - arr[12][0]), 2));
         arr[11][0] = arr[12][0];
-        arr[11][1] = arr[12][1] + (float) len11_12;
+        arr[11][1] = arr[12][1] - (float) len11_12; //오른쪽 측면 그려질 때
+
+        float x, y;
+        x = (arr[8][1] + arr[11][1]) / 2 + 5;
+        y = (arr[8][0] + arr[11][0]) / 2 + 5; //
 
         //상체(머리,목,어깨)높이: 엉덩이 내려간 만큼 같이 내려가게
         arr[0][0] = arr[0][0] - heigtLeft;
@@ -162,13 +165,60 @@ public class DrawView extends View{
         arr[2][0] = arr[2][0] - heigtLeft;
         arr[5][0] = arr[5][0] - heightRight;
 
+        //허벅지 길이 조정
+        arr[8][1] = arr[8][1] - (float)0.2*(float)len8_9;
+
+        //목 위치 조정
+        arr[1][1] = (float)0.5*(arr[9][1]+arr[8][1]);
+
+        //머리랑 목 같게
+        arr[0][1] = arr[1][1];
+
+        //목과 어깨 위치가 같게 (측면 고려)
+        arr[2][0] = arr[1][0];
+        arr[2][1] = arr[1][1];
+        arr[5][0] = arr[1][0];
+        arr[5][1] = arr[1][1];
+
+        //어깨와 팔꿈치, 팔꿈치와 손목간의 길이 측정
+        double len2_3 = Math.sqrt(Math.pow((arr[2][1] - arr[3][1]), 2) + Math.pow((arr[2][0] - arr[3][0]), 2));
+        double len3_4 = Math.sqrt(Math.pow((arr[3][1] - arr[4][1]), 2) + Math.pow((arr[3][0] - arr[4][0]), 2)); //left
+        double len5_6 = Math.sqrt(Math.pow((arr[5][1] - arr[6][1]), 2) + Math.pow((arr[5][0] - arr[6][0]), 2));
+        double len6_7 = Math.sqrt(Math.pow((arr[6][1] - arr[7][1]), 2) + Math.pow((arr[6][0] - arr[7][0]), 2)); //right
 
         //손 뻗는 모양: 팔꿈치(3번,6번), 손목(4번,7번)-> 어깨(2번,5번)과 높이가 같게
         arr[3][0] = arr[2][0];
         arr[4][0] = arr[2][0];
         arr[6][0] = arr[5][0];
         arr[7][0] = arr[5][0];
+
+        //팔 길이 조정
+        arr[3][1] = arr[2][1]-(float)len2_3;
+        arr[4][1] = arr[3][1]-(float)len3_4; //left 왼쪽 측면 그려질 때
+        arr[6][1] = arr[5][1]+(float)len5_6;
+        arr[7][1] = arr[6][1]+(float)len6_7; // right 오른쪽 측면 그려질 때
+
+        //발목이 무릎보다 뒤로 가게
+        double len9_10_1 = Math.sqrt(Math.pow((arr[9][1] - arr[10][1]), 2) + Math.pow((arr[9][0] - arr[10][0]), 2)); // 좌표 조정 전 다리 하부 길이
+
+        arr[10][1] = arr[10][1] + (float)0.13*(float)len8_9; //left
+        arr[13][1] = arr[13][1] - (float)0.13*(float)len11_12; // right 발목 x 좌표를 무릎보다 뒤쪽으로 이동
+
+        double len9_10_2 = Math.sqrt(Math.pow((arr[9][1] - arr[10][1]), 2) + Math.pow((arr[9][0] - arr[10][0]), 2)); // 좌표 조정 후 다리 하부 길이
+
+        double lenleg = len9_10_2 - len9_10_1; // 좌표 조정 전후 길이 차
+
+        arr[9][0] = arr[9][0] + (float) lenleg; // left
+        arr[12][0] = arr[12][0] + (float)lenleg; // right좌표 조정으로 인한 길이 차만큼 무릎 좌표의 y축 조정
+
+        //가이드라인 위치 조정
+        double aheight = 0.5 * Math.sqrt(Math.pow((arr[9][1] - arr[10][1]), 2) + Math.pow((arr[9][0] - arr[10][0]), 2));
+        float aheight2 = (float)0.5 * (arr[9][0] - arr[10][0]);
+        for(int i=0; i<14; i++)
+            arr[i][0] = arr[i][0] - (float)aheight2;
+        // y = y - (float)aheight;
     }
+
     protected void wideSquatPose(){
         //높이차
         float heightRight=arr[11][0]-arr[12][0];
@@ -205,15 +255,14 @@ public class DrawView extends View{
 
     }
     protected void lungePose(){
-        arr[8][0] = arr[9][0];
-        arr[12][0] = arr[13][0];
+
     }
 
     protected void vUpPose(float x, float y){
         double len1x = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
         arr[1][0] = arr[1][0]+(float)len1x;
     }
-    @Override
+
     protected void onDraw(Canvas canvas) {
 //            tt.setText("아아");
 
@@ -231,29 +280,30 @@ public class DrawView extends View{
 
         //런지
         //lungePose();
+
         canvas.drawLine(arr[0][1], arr[0][0], arr[1][1], arr[1][0], ppaint);
         canvas.drawLine(arr[1][1], arr[1][0], arr[2][1], arr[2][0], ppaint);
-        canvas.drawLine(arr[1][1], arr[1][0], arr[5][1], arr[5][0], ppaint);
+        //canvas.drawLine(arr[1][1], arr[1][0], arr[5][1], arr[5][0], ppaint); // 스쿼트포즈 x
         canvas.drawLine(arr[2][1], arr[2][0], arr[3][1], arr[3][0], ppaint);
         canvas.drawLine(arr[3][1], arr[3][0], arr[4][1], arr[4][0], ppaint);
-        canvas.drawLine(arr[5][1], arr[5][0], arr[6][1], arr[6][0], ppaint);
-        canvas.drawLine(arr[6][1], arr[6][0], arr[7][1], arr[7][0], ppaint);
+        //canvas.drawLine(arr[5][1], arr[5][0], arr[6][1], arr[6][0], ppaint); // 스쿼트포즈 x
+        //canvas.drawLine(arr[6][1], arr[6][0], arr[7][1], arr[7][0], ppaint); // 스쿼트포즈 x
 
         float x, y;
         x = (arr[8][1] + arr[11][1]) / 2 + 5;
         y = (arr[8][0] + arr[11][0]) / 2 + 5; // 골반 사이 좌표
 
-        canvas.drawLine(arr[1][1], arr[1][0], x, y, ppaint);
-        canvas.drawLine(x, y, arr[8][1], arr[8][0], ppaint);
-        canvas.drawLine(x, y, arr[11][1], arr[11][0], ppaint);
+        //canvas.drawLine(arr[1][1], arr[1][0], x, y, ppaint); //스쿼트포즈 x
+        //canvas.drawLine(x, y, arr[8][1], arr[8][0], ppaint); //스쿼트포즈 x
+        //canvas.drawLine(x, y, arr[11][1], arr[11][0], ppaint); //스쿼트포즈 x
 
         canvas.drawLine(arr[1][1], arr[1][0], arr[8][1], arr[8][0], ppaint);
-        canvas.drawLine(arr[1][1], arr[1][0], arr[11][1], arr[11][0], ppaint);
+        //canvas.drawLine(arr[1][1], arr[1][0], arr[11][1], arr[11][0], ppaint); //스쿼트포즈 x
 
         canvas.drawLine(arr[8][1], arr[8][0], arr[9][1], arr[9][0], ppaint);
         canvas.drawLine(arr[9][1], arr[9][0], arr[10][1], arr[10][0], ppaint);
-        canvas.drawLine(arr[11][1], arr[11][0], arr[12][1], arr[12][0], ppaint);
-        canvas.drawLine(arr[12][1], arr[12][0], arr[13][1], arr[13][0], ppaint);
+        //canvas.drawLine(arr[11][1], arr[11][0], arr[12][1], arr[12][0], ppaint); //스쿼트포즈 x
+        //canvas.drawLine(arr[12][1], arr[12][0], arr[13][1], arr[13][0], ppaint); //스쿼트포즈 x
 
            /* for (int i = 0; i < 14; i++) {
 //            Log.d("check1", i + " : " + arr[i][0] + " " + arr[i][1]);
@@ -267,19 +317,15 @@ public class DrawView extends View{
         Timer t_timer=new Timer();
 
         TimerTask t_task=new TimerTask() {
-            int count=0;
+            int count=1;
             @Override
             public void run() {
-                if(count==0) {
-                    standard=arr;
+
+                if(count==1) {
                     myView.invalidate();
                     count++;
-                    poseEstimation(count);
                 }
                 else{
-                    if(arr[12][0]==standard[12][0]){
-                        poseCount++;
-                    }
                     t_timer.cancel();
                     t_timer.purge();
                 }
@@ -295,7 +341,7 @@ public class DrawView extends View{
     //float[][] standard=new float[14][2];
 
     /*추가 pose count함수 */
-    public int poseEstimation(int countPose){
+    public static int poseEstimation(int countPose){
         return countPose;
     }
 
