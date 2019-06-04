@@ -35,9 +35,11 @@ import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v4.content.ContextCompat;
@@ -55,12 +57,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.capstone.wowu.view.AutoFitTextureView;
-import com.capstone.wowu.view.DrawView;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +73,7 @@ import static com.capstone.wowu.view.DrawView.myView;
  * Basic fragments for the Camera.
  */
 public class Camera2BasicFragment extends Fragment
-        implements FragmentCompat.OnRequestPermissionsResultCallback {
+        implements FragmentCompat.OnRequestPermissionsResultCallback, TextToSpeech.OnInitListener {
 
     /**
      * Tag for the {@link Log}.
@@ -110,7 +112,6 @@ public class Camera2BasicFragment extends Fragment
     public static Button plank;
     public static Button dhanurasana;
 
-
 //    public static LinearLayout bottomInfoLayout;
 
     private final Object lock = new Object();
@@ -119,6 +120,7 @@ public class Camera2BasicFragment extends Fragment
     private ImageClassifier classifier;
     public static int previewWidth;
     private Integer cameraPosition = CameraCharacteristics.LENS_FACING_BACK;
+    private TextToSpeech textToSpeech;
 
     /**
      * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a {@link
@@ -277,7 +279,7 @@ public class Camera2BasicFragment extends Fragment
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera2_basic, container, false);
         Button switchButton = view.findViewById(R.id.switchCameraButton);
-
+        textToSpeech = new TextToSpeech(getActivity(),this);
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,7 +328,9 @@ public class Camera2BasicFragment extends Fragment
             }
         });
 
+        //주희,해원 각 포즈 버튼 달기
         v_up.setOnClickListener(new View.OnClickListener() {
+            String v_up_info = getString(R.string.v_up_info);
             @Override
             public void onClick(View v) {
                 myView.invalidate();
@@ -338,9 +342,14 @@ public class Camera2BasicFragment extends Fragment
                     flag_v_up=0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+
+                speech(v_up_info);
             }
         });
+
+        //주희,해원  포즈 버튼 달기
         marjaryasana.setOnClickListener(new View.OnClickListener() {
+            String marjaryasana_info = getString(R.string.marjaryasana_info);
             @Override
             public void onClick(View v) {
                 if(flag_marjaryasana ==0) {
@@ -351,9 +360,13 @@ public class Camera2BasicFragment extends Fragment
                     flag_marjaryasana =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(marjaryasana_info);
             }
+
         });
+        //주희,해원 각 포즈 버튼 달기
         side_plank.setOnClickListener(new View.OnClickListener() {
+            String side_plank_info = getString(R.string.side_plank_info);
             @Override
             public void onClick(View v) {
                 if(flag_side_plank ==0) {
@@ -364,9 +377,12 @@ public class Camera2BasicFragment extends Fragment
                     flag_side_plank =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(side_plank_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         side_hip_kick.setOnClickListener(new View.OnClickListener() {
+            String side_hip_kick_info = getString(R.string.side_hip_kick_info);
             @Override
             public void onClick(View v) {
                 if(flag_side_hip_kick ==0) {
@@ -377,29 +393,29 @@ public class Camera2BasicFragment extends Fragment
                     flag_side_hip_kick =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(side_hip_kick_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         squat.setOnClickListener(new View.OnClickListener() {
+            String squat_info = getString(R.string.squat_info);
             @Override
             public void onClick(View v) {
                 myView.invalidate();
-                long start=System.currentTimeMillis();
-                if (flag_squat == 0) {
+                if(flag_squat ==0) {
                     flag_squat = 1;
                     set_count_input.setVisibility(View.VISIBLE);
-                } else {
-                    flag_squat = 0;
+                }
+                else {
+                    flag_squat =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
-                DrawView.squatPose();
-
-                long end=System.currentTimeMillis();
-                if(start-end==10000) myView.invalidate();
+                speech(squat_info);
             }
-
         });
-
+        //주희,해원 각 포즈 버튼 달기
         sphinx_pose.setOnClickListener(new View.OnClickListener() {
+            String sphinx_pose_info = getString(R.string.sphinx_pose_info);
             @Override
             public void onClick(View v) {
                 if(flag_sphinx_pose ==0) {
@@ -410,9 +426,12 @@ public class Camera2BasicFragment extends Fragment
                     flag_sphinx_pose =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(sphinx_pose_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         wide_squat.setOnClickListener(new View.OnClickListener() {
+            String wide_squat_info = getString(R.string.wide_squat_info);
             @Override
             public void onClick(View v) {
                 if(flag_wide_squat ==0) {
@@ -423,9 +442,12 @@ public class Camera2BasicFragment extends Fragment
                     flag_wide_squat =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(wide_squat_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         bhujangasana.setOnClickListener(new View.OnClickListener() {
+            String bhujangasana_info = getString(R.string.bhujangasana_info);
             @Override
             public void onClick(View v) {
                 if(flag_bhujangasana ==0) {
@@ -436,9 +458,12 @@ public class Camera2BasicFragment extends Fragment
                     flag_bhujangasana =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(bhujangasana_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         plank.setOnClickListener(new View.OnClickListener() {
+            String plank_info = getString(R.string.plank_info);
             @Override
             public void onClick(View v) {
                 if(flag_plank ==0) {
@@ -449,9 +474,12 @@ public class Camera2BasicFragment extends Fragment
                     flag_plank =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(plank_info);
             }
         });
+        //주희,해원 각 포즈 버튼 달기
         dhanurasana.setOnClickListener(new View.OnClickListener() {
+            String dhanurasana_info = getString(R.string.dhanurasana_info);
             @Override
             public void onClick(View v) {
                 if(flag_dhanurasana ==0) {
@@ -462,10 +490,48 @@ public class Camera2BasicFragment extends Fragment
                     flag_dhanurasana =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
+                speech(dhanurasana_info);
             }
         });
 
         return view;
+    }
+
+    //주희 speech 함수 설정
+    public void speech(String text) {
+        // API 21
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+            // API 20
+        else
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    //주희 음성출력 위한 oninit 함수 오버라이딩
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            //사용할 언어를 설정
+            int result = textToSpeech.setLanguage(Locale.KOREA);
+            //언어 데이터가 없거나 혹은 언어가 지원하지 않으면...
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            } else {
+                //음성 톤
+                textToSpeech.setPitch(0.7f);
+                //읽는 속도
+                textToSpeech.setSpeechRate(1.2f);
+            }
+        }
+    }
+
+    //주희 onstop 함수 설정
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
     }
 
     /**
