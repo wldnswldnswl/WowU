@@ -18,6 +18,8 @@ package com.capstone.wowu;
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -25,6 +27,7 @@ import android.util.Log;
 
 import com.capstone.wowu.model.BaseAngle;
 import com.capstone.wowu.view.DrawView;
+import com.capstone.wowu.Camera2BasicFragment; //6/4 지운 수정
 
 import org.tensorflow.lite.Delegate;
 import org.tensorflow.lite.Interpreter;
@@ -38,12 +41,26 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.capstone.wowu.view.DrawView.MAX_PREVIEW_HEIGHT;
+import static com.capstone.wowu.view.DrawView.MAX_PREVIEW_WIDTH;
+
 /**
  * Classifies images with Tensorflow Lite.
  */
 public abstract class ImageClassifier {
+    //6/4 지운 추가 //임시
+    public static int poseCount=0;
+    public static float standard[][]=new float[14][2];
+    public static float countArr[][]=new float[14][2];
+    private static final int HEATMAPWIDTH = 96;
 
-    // Display preferences
+    public static void setStandard(float[][] s){
+        standard=s;
+        Log.i(TAG, "setStandard: "+ standard[8][0]);
+    }
+
+
+    //  preferences
     /**
      * 30% 이상은 강조글로 표현
      */
@@ -59,6 +76,7 @@ public abstract class ImageClassifier {
     private static final int HEATMAPHEIGHT = 96;
     private static final int NUMJOINT = 14;
     //이게 점들의수
+
 
     /**
      * Tag for the {@link Log}.
@@ -184,7 +202,7 @@ public abstract class ImageClassifier {
     //TODO: 어디서 활용되는지 확인 필요
     void classifyFrame(Bitmap bitmap, SpannableStringBuilder builder) {
         if (tflite == null) {
-            Log.e(TAG, "Image classifier has not been initialized; Skipped.");
+          //  Log.e(TAG, "Image classifier has not been initialized; Skipped.");
             builder.append(new SpannableString("Uninitialized Classifier."));
         }
 
@@ -194,7 +212,7 @@ public abstract class ImageClassifier {
         long startTime = SystemClock.uptimeMillis();
         runInference();
         long endTime = SystemClock.uptimeMillis();
-        Log.d(TAG, "Timecost to run model inference: " + Long.toString(endTime - startTime));
+       // Log.d(TAG, "Timecost to run model inference: " + Long.toString(endTime - startTime));
 
         drawBodyPoint();
 
@@ -227,8 +245,28 @@ public abstract class ImageClassifier {
 
             arr[k] = result;
         }
+
+        //6/4 지운 추가 :임시
+        Log.i("classifier의 standard: ",standard[8][0]+"");
+        Log.i("classifier의 arr1: ",arr[8][0]+"");
         DrawView.setArr(arr);
-        compareAccuracy(arr);
+        Log.i("classifier의 arr2: ",arr[8][0]+"");
+
+        for (int i = 0; i < NUMJOINT; i++) {
+            Log.i(TAG, "countArr 비교 속 arr: "+arr[8][0]);
+          //  countArr[i][0] = arr[i][0] / 96 * 2042;
+          //  countArr[i][1] = arr[i][1] / HEATMAPWIDTH * 1082;
+            countArr[i][0] = arr[i][0]  / HEATMAPHEIGHT * MAX_PREVIEW_HEIGHT;
+            countArr[i][1] = arr[i][1] / HEATMAPWIDTH * MAX_PREVIEW_WIDTH;
+        }
+        Log.i(TAG, "**countArr: "+countArr[8][0]);
+
+        if((standard[11][0]-20<=countArr[11][0])&&(standard[11][0]+20>=countArr[11][0])){
+            Log.i("drawBodyPoint호출됨",(++poseCount)+"");
+            Camera2BasicFragment.setViewText(poseCount+"");
+            Log.i("포즈 카운트ㅡ: ",poseCount+"");
+        }
+
     }
 
     private static float[] findMaximumIndex(float[][] a) {

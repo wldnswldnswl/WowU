@@ -44,7 +44,6 @@
         android:layout_marginStart="200dp"
         android:layout_marginTop="320dp"
         android:layout_toEndOf="@+id/switchCameraButton"
-        android:text="10"
         android:textColor="@color/colorRed"
         android:textSize="24sp" />
 
@@ -59,14 +58,23 @@
         android:textSize="24sp" />
 
     <TextView
+        android:id="@+id/text_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="126dp"
+        android:layout_marginTop="320dp"
+        android:text="자세를 선택하세요"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/text_view"
-        android:layout_width="297dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="159dp"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="90dp"
         android:layout_marginTop="350dp"
         android:layout_marginBottom="345dp"
-        android:text="자세인식중"
         android:textColor="@color/colorRed"
         android:textSize="24sp" />
 
@@ -91,6 +99,7 @@
             tools:ignore="MissingConstraints" />
 
         <!--<수정>해원-세트 수 입력 버튼-->
+
         <LinearLayout
             android:id="@+id/set_count_input"
             android:visibility="invisible"
@@ -117,8 +126,7 @@
                 android:text="입력"/>
         </LinearLayout>
 
-        <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <HorizontalScrollView
             android:layout_width="300dp"
             android:layout_height="match_parent">
 
@@ -130,67 +138,68 @@
                 android:visibility="invisible">
 
                 <Button
-                    android:id="@+id/v_up"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:text="v업" />
-
-                <Button
-                    android:id="@+id/marjaryasana"
+                    android:id="@+id/squart"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="45dp"
-                    android:text="고양이 자세" />
-
-                <Button
-                    android:id="@+id/side_plank"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp"
-                    android:text="사이드 플랭크" />
-
-                <Button
-                    android:id="@+id/side_hip_kick"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp"
-                    android:text="사이드힙킥" />
-
-                <Button
-                    android:id="@+id/squat"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
                     android:text="스쿼트" />
-
-                <Button
-                    android:id="@+id/sphinx_pose"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:text="스핑크스" />
 
                 <Button
                     android:id="@+id/wide_squat"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp"
+                    android:layout_marginTop="50dp"
                     android:text="와이드 스쿼트" />
 
                 <Button
-                    android:id="@+id/bhujangasana"
+                    android:id="@+id/lunge"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="45dp"
-                    android:text="코브라 자세" />
+                    android:text="런지" />
+
+                <Button
+                    android:id="@+id/v_up"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="58dp"
+                    android:text="브이업" />
+
+                <Button
+                    android:id="@+id/side_plank"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="사이드 플랭크" />
 
                 <Button
                     android:id="@+id/plank"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="58dp"
                     android:text="플랭크" />
+
+                <Button
+                    android:id="@+id/side_hip_kick"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="사이드힙킥" />
+
+                <Button
+                    android:id="@+id/sphinx_pose"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="58dp"
+                    android:text="스핑크스" />
+
+                <Button
+                    android:id="@+id/bhujangasana"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="코브라 자세" />
 
                 <Button
                     android:id="@+id/dhanurasana"

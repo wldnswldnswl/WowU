@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.fritz:vision-pose-estimation-model:3.3.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2b3119984e51e760c12a6088e8491cb8/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2b3119984e51e760c12a6088e8491cb8/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.fritz/vision-pose-estimation-model/3.3.1/c56ecf56876013b32049e2ccb98bec0fa12a78e2/vision-pose-estimation-model-3.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

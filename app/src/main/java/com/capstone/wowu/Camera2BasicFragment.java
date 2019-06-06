@@ -22,8 +22,11 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -39,6 +42,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
@@ -57,17 +61,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.capstone.wowu.view.AutoFitTextureView;
+import com.capstone.wowu.view.DrawView;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import static com.capstone.wowu.view.DrawView.arr;
+import static com.capstone.wowu.view.DrawView.isSquart;
 import static com.capstone.wowu.view.DrawView.myView;
-
+import static com.capstone.wowu.view.DrawView.squart;
+import static com.capstone.wowu.view.DrawView.wsquart;
 
 /**
  * Basic fragments for the Camera.
@@ -100,9 +110,15 @@ public class Camera2BasicFragment extends Fragment
 
     public static TextView percentageText6;
 
+    //6/4 지운 수정
+    public static TextView text;
+
+    //수정
+    public static TimerTask tt;
+
     //<수정>해원-세트 수 입력 버튼
     public static Button v_up;
-    public static Button marjaryasana;
+    public static Button lunge;
     public static Button side_plank;
     public static Button side_hip_kick;
     public static Button squat;
@@ -120,7 +136,7 @@ public class Camera2BasicFragment extends Fragment
     private ImageClassifier classifier;
     public static int previewWidth;
     private Integer cameraPosition = CameraCharacteristics.LENS_FACING_BACK;
-    private TextToSpeech textToSpeech;
+    private static TextToSpeech textToSpeech;
 
     /**
      * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a {@link
@@ -180,6 +196,7 @@ public class Camera2BasicFragment extends Fragment
                     cameraOpenCloseLock.release();
                     cameraDevice = currentCameraDevice;
                     createCameraPreviewSession();
+
                 }
 
                 @Override
@@ -262,18 +279,27 @@ public class Camera2BasicFragment extends Fragment
      * Layout the preview and buttons.
      */
 
+    //6/4 지운 수정
     //<수정>해원-세트 수 입력 버튼
-    int flag_poseSelect=0;
-    int flag_v_up=0;
-    int flag_marjaryasana=0;
-    int flag_side_plank=0;
-    int flag_side_hip_kick=0;
-    int flag_squat=0;
-    int flag_sphinx_pose=0;
-    int flag_wide_squat=0;
-    int flag_bhujangasana=0;
-    int flag_plank=0;
-    int flag_dhanurasana=0;
+    public static int flag_poseSelect=0;
+    public static int flag_v_up=0;
+    public static int flag_lunge=0;
+    public static int flag_side_plank=0;
+    public static int flag_side_hip_kick=0;
+    public static int flag_squat=0;
+    public static int flag_sphinx_pose=0;
+    public static int flag_wide_squat=0;
+    public static int flag_bhujangasana=0;
+    public static int flag_plank=0;
+    public static int flag_dhanurasana=0;
+
+    //6/4 지운 수정
+    private static String standard=null;
+    public static void setViewText(String fromAnotherClass){
+        standard=fromAnotherClass;
+        speech(standard);
+
+    }
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -287,12 +313,13 @@ public class Camera2BasicFragment extends Fragment
             }
         });
 
-        PoseEstimationTimer pose=new PoseEstimationTimer();
+
         TextView countdown=(TextView)view.findViewById(R.id.text_count);
         TextView intro=(TextView)view.findViewById(R.id.text_view);
+        TextView selection=(TextView)view.findViewById(R.id.text_selection);
 
-        //new FlickeringAnimation().Flickering(intro);
-        pose.startTimer(countdown,intro);
+        //6/4 지운 수정 (두 줄 삭제)
+
         int countPose=0;
 
         ImageView poseSelect;
@@ -302,18 +329,73 @@ public class Camera2BasicFragment extends Fragment
         poseSelect = view.findViewById(R.id.pose);
         poseName = view.findViewById(R.id.pose_select_name);
         set_count_input=view.findViewById(R.id.set_count_input);
+
+        //6/4 지운 수정
+        text=(TextView)view.findViewById(R.id.text_countPose);
+
+        Log.i("핸들러 출력:","");
+
+        //6/4 지운 수정 : 핸들러를 사용해 레이아웃에 접근해야 동적으로 레이아웃을 변경할 수 있다.
+        Handler h=new Handler(){
+            public void handleMessage(Message msg){
+                String message=(String)msg.obj; // 메시지 문자열로 변환
+                text.setText(message); //setText
+                System.out.println("카운트 뷰 값"+(message));
+            }
+        };
+
+        //6/4 지운 수정
+        Timer timer = new Timer(true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg=Message.obtain(); //메시지에 String 넣는 방법
+                msg.obj=standard; // 1) obj에 문자열 대입
+                msg.setTarget(h); // 2) 타겟 핸들러를 지정
+                msg.sendToTarget(); // 3) 지정 타겟으로 해당 메시지 보내기
+            }
+
+            @Override
+            public boolean cancel() {
+                Log.v(TAG,"timer cancel");
+                return super.cancel();
+            }
+        };
+        timer.schedule(timerTask, 0, 500);
+
+        //6/4 지운 수정
         //<수정>해원-세트 수 입력 버튼
         v_up=view.findViewById(R.id.v_up);
-        marjaryasana=view.findViewById(R.id.marjaryasana);
+        lunge=view.findViewById(R.id.lunge);
         side_plank=view.findViewById(R.id.side_plank);
         side_hip_kick=view.findViewById(R.id.side_hip_kick);
-        squat=view.findViewById(R.id.squat);
+        squat=view.findViewById(R.id.squart);
         sphinx_pose=view.findViewById(R.id.sphinx_pose);
         wide_squat=view.findViewById(R.id.wide_squat);
         bhujangasana=view.findViewById(R.id.bhujangasana);
         plank=view.findViewById(R.id.plank);
         dhanurasana=view.findViewById(R.id.dhanurasana);
 
+        //6/4 지운 수정 : 10초 후 화면 갱신 타이머
+        Timer squat_timer= new Timer();
+        TimerTask squat_task = new TimerTask() {
+            @Override
+            public void run() {
+                ImageClassifier.setStandard(squart);
+                myView.invalidate();
+            }
+        };
+
+        Timer wide_squat_timer=new Timer();
+        TimerTask wide_squat_task = new TimerTask() {
+            @Override
+            public void run() {
+                ImageClassifier.setStandard(wsquart);
+                myView.invalidate();
+            }
+        };
+
+        //6/4 지운 수정 : 리스너들
         poseSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,13 +410,71 @@ public class Camera2BasicFragment extends Fragment
             }
         });
 
+        //스쿼트 리스너
+        //주희,해원 각 포즈 버튼 달기
+        squat.setOnClickListener(new View.OnClickListener() {
+            String squat_info = getString(R.string.squat_info);
+            @Override
+            public void onClick(View v) {
+                if(flag_squat ==0) {
+                   // wide_squat_timer.purge();
+                    //((LinearLayout)selection.getParent()).removeView((TextView)selection); // 자세선택 안내문구 삭제
+                    selection.setText("");
+                    PoseEstimationTimer pose=new PoseEstimationTimer();
+                    flag_squat = 1;
+                    System.out.println("Camerabasic 스쿼트 플래그: "+flag_squat);
+                    set_count_input.setVisibility(View.VISIBLE);
+                    intro.setText("자세인식중");
+                    pose.startTimer(countdown,intro);
+                    squat_timer.schedule(squat_task, 10000,10000); // 화면 갱신 타이머 시작
+                }
+                else {
+                    selection.setText("자세를 선택하세요");
+                    intro.setText("");
+                    countdown.setText("");
+                    flag_squat =0;
+                    set_count_input.setVisibility(View.INVISIBLE);
+                    squat_timer.cancel(); // 화면 갱신 타이머 종료
+                }
+                speech(squat_info);
+            }
+        });
+
+        //와이드 스쿼트
+        //주희,해원 각 포즈 버튼 달기
+        wide_squat.setOnClickListener(new View.OnClickListener() {
+            String wide_squat_info = getString(R.string.wide_squat_info);
+            @Override
+            public void onClick(View v) {
+                if(flag_wide_squat ==0) {
+                    selection.setText("");
+                    PoseEstimationTimer pose2=new PoseEstimationTimer();
+                    flag_wide_squat = 1;
+                    set_count_input.setVisibility(View.VISIBLE);
+                    intro.setText("자세인식중");
+                    pose2.startTimer(countdown,intro);
+                    wide_squat_timer.schedule(wide_squat_task, 10000,10000);
+                }
+                else {
+                    selection.setText("자세를 선택하세요");
+                    intro.setText("");
+                    countdown.setText("");
+                    flag_wide_squat =0;
+                    set_count_input.setVisibility(View.INVISIBLE);
+                    wide_squat_timer.cancel();
+                }
+                speech(wide_squat_info);
+            }
+        });
+
         //주희,해원 각 포즈 버튼 달기
         v_up.setOnClickListener(new View.OnClickListener() {
             String v_up_info = getString(R.string.v_up_info);
             @Override
             public void onClick(View v) {
-                myView.invalidate();
                 if(flag_v_up ==0) {
+                    selection.setText("");
+                    PoseEstimationTimer pose=new PoseEstimationTimer();
                     flag_v_up = 1;
                     set_count_input.setVisibility(View.VISIBLE);
                 }
@@ -348,19 +488,19 @@ public class Camera2BasicFragment extends Fragment
         });
 
         //주희,해원  포즈 버튼 달기
-        marjaryasana.setOnClickListener(new View.OnClickListener() {
-            String marjaryasana_info = getString(R.string.marjaryasana_info);
+        lunge.setOnClickListener(new View.OnClickListener() {
+            String lunge_info ="다리를 골반넓이 만큼 벌리고 한쪽 발을 한발 앞으로 내미세요. 앞발의 무릎이 수직이 되고 허리를 곧게 세운 채로 내려가세요." ;
             @Override
             public void onClick(View v) {
-                if(flag_marjaryasana ==0) {
-                    flag_marjaryasana = 1;
+                if(flag_lunge ==0) {
+                    flag_lunge = 1;
                     set_count_input.setVisibility(View.VISIBLE);
                 }
                 else {
-                    flag_marjaryasana =0;
+                    flag_lunge =0;
                     set_count_input.setVisibility(View.INVISIBLE);
                 }
-                speech(marjaryasana_info);
+                speech(lunge_info);
             }
 
         });
@@ -392,27 +532,12 @@ public class Camera2BasicFragment extends Fragment
                 else {
                     flag_side_hip_kick =0;
                     set_count_input.setVisibility(View.INVISIBLE);
+
                 }
                 speech(side_hip_kick_info);
             }
         });
-        //주희,해원 각 포즈 버튼 달기
-        squat.setOnClickListener(new View.OnClickListener() {
-            String squat_info = getString(R.string.squat_info);
-            @Override
-            public void onClick(View v) {
-                myView.invalidate();
-                if(flag_squat ==0) {
-                    flag_squat = 1;
-                    set_count_input.setVisibility(View.VISIBLE);
-                }
-                else {
-                    flag_squat =0;
-                    set_count_input.setVisibility(View.INVISIBLE);
-                }
-                speech(squat_info);
-            }
-        });
+
         //주희,해원 각 포즈 버튼 달기
         sphinx_pose.setOnClickListener(new View.OnClickListener() {
             String sphinx_pose_info = getString(R.string.sphinx_pose_info);
@@ -429,22 +554,7 @@ public class Camera2BasicFragment extends Fragment
                 speech(sphinx_pose_info);
             }
         });
-        //주희,해원 각 포즈 버튼 달기
-        wide_squat.setOnClickListener(new View.OnClickListener() {
-            String wide_squat_info = getString(R.string.wide_squat_info);
-            @Override
-            public void onClick(View v) {
-                if(flag_wide_squat ==0) {
-                    flag_wide_squat = 1;
-                    set_count_input.setVisibility(View.VISIBLE);
-                }
-                else {
-                    flag_wide_squat =0;
-                    set_count_input.setVisibility(View.INVISIBLE);
-                }
-                speech(wide_squat_info);
-            }
-        });
+
         //주희,해원 각 포즈 버튼 달기
         bhujangasana.setOnClickListener(new View.OnClickListener() {
             String bhujangasana_info = getString(R.string.bhujangasana_info);
@@ -498,7 +608,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     //주희 speech 함수 설정
-    public void speech(String text) {
+    public static void speech(String text) {
         // API 21
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
@@ -549,7 +659,7 @@ public class Camera2BasicFragment extends Fragment
         percentageText4 = view.findViewById(R.id.percentage4);
         percentageText5 = view.findViewById(R.id.percentage5);
         percentageText6 = view.findViewById(R.id.percentage6);*/
-        TextView text=(TextView)view.findViewById(R.id.text_countPose);
+        //6/4 지운 수정
         // text.setText(poseEstimation(countPose));
     }
 
@@ -899,5 +1009,15 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
-
+    //timerTask함수
+    /*public TimerTask t_task(){
+        TimerTask temp_task = new TimerTask() {
+            @Override
+            public void run() {
+                ImageClassifier.setStandard(squart);
+                myView.invalidate();
+            }
+        };
+        return temp_task;
+    }*/
 }

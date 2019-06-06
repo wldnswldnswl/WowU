@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.fritz:vision:3.3.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f66eff4013da07898526215e793561b2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f66eff4013da07898526215e793561b2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.fritz/vision/3.3.1/f6512b2a371420f879bc7170dbd71ba02792dd03/vision-3.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

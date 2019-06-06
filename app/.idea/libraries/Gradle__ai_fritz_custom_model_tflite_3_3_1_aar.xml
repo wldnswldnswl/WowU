@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.fritz:custom-model-tflite:3.3.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/86f2d0b22821bf4ffa77d07ee09f1cd2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/86f2d0b22821bf4ffa77d07ee09f1cd2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.fritz/custom-model-tflite/3.3.1/d25a31d3da4cdc8af4a3e564093fe4f984c8382a/custom-model-tflite-3.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
