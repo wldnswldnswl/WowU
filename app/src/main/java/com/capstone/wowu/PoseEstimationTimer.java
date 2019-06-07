@@ -20,6 +20,7 @@ public class PoseEstimationTimer {
         countDownTimer=new CountDownTimer(leftsec,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                ImageClassifier.wait10sec=1;
                 System.out.println("leftsec: "+leftsec);
                 leftsec-=1000;
                 timeLeft=" "+((leftsec/1000)+1);
@@ -37,6 +38,7 @@ public class PoseEstimationTimer {
                 intro.setText("");
                 countDownTimer.cancel();
                 timerRunning=false;
+                ImageClassifier.wait10sec=0;
             }
         }.start();
         //timerRunning=true;
