@@ -293,12 +293,22 @@ public class Camera2BasicFragment extends Fragment
     public static int flag_plank=0;
     public static int flag_dhanurasana=0;
 
+   /*static  Timer down_timer=new Timer();
+    static TimerTask down_task = new TimerTask(){
+        @Override
+        public void run() {
+            ImageClassifier.down=1;
+        }
+    };*/
     //6/4 지운 수정
     private static String standard=null;
     public static void setViewText(String fromAnotherClass){
-        standard=fromAnotherClass;
-        speech(standard);
-
+     //   if(ImageClassifier.down==1){
+            standard=fromAnotherClass;
+            speech(standard);
+           // ImageClassifier.down=0;
+       // }
+        //down_timer.schedule(down_task,1000, 1000);
     }
     @Override
     public View onCreateView(
@@ -353,6 +363,7 @@ public class Camera2BasicFragment extends Fragment
                 msg.obj=standard; // 1) obj에 문자열 대입
                 msg.setTarget(h); // 2) 타겟 핸들러를 지정
                 msg.sendToTarget(); // 3) 지정 타겟으로 해당 메시지 보내기
+                //ImageClassifier.down=0;
             }
 
             @Override
@@ -361,7 +372,7 @@ public class Camera2BasicFragment extends Fragment
                 return super.cancel();
             }
         };
-        timer.schedule(timerTask, 0, 500);
+        timer.schedule(timerTask, 0, 200);
 
         //6/4 지운 수정
         //<수정>해원-세트 수 입력 버튼

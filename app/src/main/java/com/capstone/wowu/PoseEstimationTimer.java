@@ -39,6 +39,7 @@ public class PoseEstimationTimer {
                 countDownTimer.cancel();
                 timerRunning=false;
                 ImageClassifier.wait10sec=0;
+               // ImageClassifier.down=1;
             }
         }.start();
         //timerRunning=true;

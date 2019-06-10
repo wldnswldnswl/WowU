@@ -54,6 +54,7 @@ public abstract class ImageClassifier {
     public static float countArr[][]=new float[14][2];
     private static final int HEATMAPWIDTH = 96;
     public static int wait10sec=1;
+    public static int down=0;
 
     public static void setStandard(float[][] s){
         standard=s;
@@ -264,11 +265,17 @@ public abstract class ImageClassifier {
 
        if(wait10sec==0){
             Log.i("자세인식 중에는 카운트를 세지 않는다.","");
-            if((standard[11][0]-20<=countArr[11][0])&&(standard[11][0]+20>=countArr[11][0])){
+            Log.i("down",down+"");
+            if(
+                   // down==1&&
+                    ((standard[11][0]-30<=countArr[11][0])&&(standard[11][0]+30>=countArr[11][0]))&&((standard[11][1]-30<=countArr[11][1])&&(standard[11][1]+30>=countArr[11][1]))
+                    ||((standard[8][0]-30<=countArr[8][0])&&(standard[8][0]+30>=countArr[8][0]))&&((standard[8][1]-30<=countArr[8][1])&&(standard[8][1]+30>=countArr[8][1]))
+            ){
                 Log.i("drawBodyPoint호출됨",(++poseCount)+"");
                 Camera2BasicFragment.setViewText(poseCount+"");
                 Log.i("포즈 카운트ㅡ: ",poseCount+"");
             }
+
     }
 
     }

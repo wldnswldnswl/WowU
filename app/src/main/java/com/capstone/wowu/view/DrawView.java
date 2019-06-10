@@ -397,7 +397,8 @@ public class DrawView extends View {
 
         //    for (int i = 0; i < 14; i++) {
 //            Log.d("check1", i + " : " + arr[i][0] + " " + arr[i][1]);
-                canvas.drawPoint(arr[11][1], arr[11][0], paint[11]);
+               // canvas.drawPoint(arr[11][1], arr[11][0], paint[11]);
+               //  canvas.drawPoint(arr[8][1], arr[8][0], paint[8]);
                // canvas.drawPoint(arr[8][1], arr[8][0], paint[8]);
       //  canvas.drawPoint(squart[8][1], squart[8][0], paint[8]);
          //   }
