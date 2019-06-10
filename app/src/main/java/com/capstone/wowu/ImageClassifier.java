@@ -267,7 +267,7 @@ public abstract class ImageClassifier {
             Log.i("자세인식 중에는 카운트를 세지 않는다.","");
             Log.i("down",down+"");
             if(
-                   // down==1&&
+                   //down==1&&
                     ((standard[11][0]-30<=countArr[11][0])&&(standard[11][0]+30>=countArr[11][0]))&&((standard[11][1]-30<=countArr[11][1])&&(standard[11][1]+30>=countArr[11][1]))
                     ||((standard[8][0]-30<=countArr[8][0])&&(standard[8][0]+30>=countArr[8][0]))&&((standard[8][1]-30<=countArr[8][1])&&(standard[8][1]+30>=countArr[8][1]))
             ){
