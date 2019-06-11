@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             // 로고
+
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="230dp"
@@ -34,7 +35,7 @@
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp"
-                app:srcCompat="@drawable/temp1"
+                app:srcCompat="@drawable/logo"
                 tools:layout_editor_absoluteX="115dp"
                 tools:layout_editor_absoluteY="16dp" />
 
