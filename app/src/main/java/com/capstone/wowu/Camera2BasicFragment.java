@@ -19,6 +19,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -56,6 +57,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -127,6 +129,7 @@ public class Camera2BasicFragment extends Fragment
     public static Button bhujangasana;
     public static Button plank;
     public static Button dhanurasana;
+    public static Button set_input;
 
 //    public static LinearLayout bottomInfoLayout;
 
@@ -292,7 +295,10 @@ public class Camera2BasicFragment extends Fragment
     public static int flag_bhujangasana=0;
     public static int flag_plank=0;
     public static int flag_dhanurasana=0;
-
+    //수정-완수 안내 문구
+    int setnum = 0;
+    int setcount=0;
+    public static int flag_success=0;
    /*static  Timer down_timer=new Timer();
     static TimerTask down_task = new TimerTask(){
         @Override
@@ -303,11 +309,14 @@ public class Camera2BasicFragment extends Fragment
     //6/4 지운 수정
     private static String standard=null;
     public static void setViewText(String fromAnotherClass){
-     //   if(ImageClassifier.down==1){
+          if(flag_success==0){
             standard=fromAnotherClass;
             speech(standard);
            // ImageClassifier.down=0;
-       // }
+        }
+          else{
+              speech(fromAnotherClass);
+          }
         //down_timer.schedule(down_task,1000, 1000);
     }
     @Override
@@ -340,8 +349,20 @@ public class Camera2BasicFragment extends Fragment
         poseName = view.findViewById(R.id.pose_select_name);
         set_count_input=view.findViewById(R.id.set_count_input);
 
+        //지수, 해원-완수 안내문구
+        EditText set_num=(EditText)view.findViewById(R.id.set_num);
+        EditText set_count=(EditText)view.findViewById(R.id.set_count);
+        try {
+            setnum = Integer.parseInt(set_num.getText().toString());
+            setcount = Integer.parseInt(set_count.getText().toString());
+        } catch(NumberFormatException e){
+            e.printStackTrace();
+        }
+
         //6/4 지운 수정
         text=(TextView)view.findViewById(R.id.text_countPose);
+        //해원 수정
+        final int text_num=Integer.parseInt(text.getText().toString());
 
         Log.i("핸들러 출력:","");
 
@@ -386,6 +407,9 @@ public class Camera2BasicFragment extends Fragment
         bhujangasana=view.findViewById(R.id.bhujangasana);
         plank=view.findViewById(R.id.plank);
         dhanurasana=view.findViewById(R.id.dhanurasana);
+        //해원 수정-완수 안내 문구
+        set_input=view.findViewById(R.id.set_input);
+
 
         //6/4 지운 수정 : 10초 후 화면 갱신 타이머
         Timer squat_timer= new Timer();
@@ -503,6 +527,7 @@ public class Camera2BasicFragment extends Fragment
             String lunge_info ="다리를 골반넓이 만큼 벌리고 한쪽 발을 한발 앞으로 내미세요. 앞발의 무릎이 수직이 되고 허리를 곧게 세운 채로 내려가세요." ;
             @Override
             public void onClick(View v) {
+
                 if(flag_lunge ==0) {
                     flag_lunge = 1;
                     set_count_input.setVisibility(View.VISIBLE);
@@ -615,6 +640,19 @@ public class Camera2BasicFragment extends Fragment
             }
         });
 
+        //수정-세트 횟수 입력 받아 완수 안내 speech
+        set_input.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                    if(text_num==setnum){
+                        flag_success=1;
+                        setViewText("한 세트 성공");
+                    }
+                    else if(text_num==setcount*setnum){
+                        setViewText("목표 성공");
+                    }
+            }
+        });
         return view;
     }
 
