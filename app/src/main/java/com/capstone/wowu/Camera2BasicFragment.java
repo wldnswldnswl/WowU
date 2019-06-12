@@ -40,6 +40,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -82,7 +83,7 @@ import static com.capstone.wowu.view.DrawView.wsquart;
 /**
  * Basic fragments for the Camera.
  */
-public class Camera2BasicFragment extends Fragment
+public class Camera2BasicFragment<countDownTimer> extends Fragment
         implements FragmentCompat.OnRequestPermissionsResultCallback, TextToSpeech.OnInitListener {
 
     /**
@@ -293,22 +294,12 @@ public class Camera2BasicFragment extends Fragment
     public static int flag_plank=0;
     public static int flag_dhanurasana=0;
 
-   /*static  Timer down_timer=new Timer();
-    static TimerTask down_task = new TimerTask(){
-        @Override
-        public void run() {
-            ImageClassifier.down=1;
-        }
-    };*/
     //6/4 지운 수정
     private static String standard=null;
     public static void setViewText(String fromAnotherClass){
-     //   if(ImageClassifier.down==1){
+            Log.d("언제 실행되는지","");
             standard=fromAnotherClass;
             speech(standard);
-           // ImageClassifier.down=0;
-       // }
-        //down_timer.schedule(down_task,1000, 1000);
     }
     @Override
     public View onCreateView(
