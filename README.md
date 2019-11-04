@@ -36,7 +36,7 @@ java jdk 1.6 +
 
 
 ## -Installation
-git clone 
+git clone https://github.com/EOM1224/WowU.git 
 
 
 
@@ -48,3 +48,4 @@ git clone
 
 
 ##### 자세한 설명은 WowU Description.ppt 참고 바랍니다.
+##### origin repository: 
