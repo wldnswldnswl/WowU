@@ -56,6 +56,6 @@
 ![5343](https://user-images.githubusercontent.com/45230079/68169487-bc98c900-ffaf-11e9-8922-897e69b0c77a.PNG)
 
 
-##### - 자세한 설명은 [Uploading WowU Description.pptx.zip…]() 참고 바랍니다.
+##### - 자세한 사항은 [WowU Description.zip](https://github.com/wldnswldnswl/MyProject/files/3806746/WowU.Description.zip) 참고 바랍니다.
 ##### - origin repository: https://github.com/EOM1224/WowU
 ##### - UCC: https://www.youtube.com/watch?v=Z5xfsuXdUuQ
