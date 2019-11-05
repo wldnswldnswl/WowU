@@ -3,9 +3,9 @@
 ### - Summary
 ![logo](https://user-images.githubusercontent.com/45230079/68108278-b7456b00-ff2a-11e9-931a-d9d0cb9ca14f.png)
 
-#### 1. 인공지능을 이용한 홈트레이닝 자세교정 어플리케이션
-#### 2. Keypoint Detection을 이용해 사용자 몸을 실시간으로 인식
-#### 3. 선택 자세에 맞는 사용자 맞춤 가이드라인 제공
+#### - 인공지능을 이용한 홈트레이닝 자세교정 어플리케이션
+#### - Keypoint Detection을 이용해 사용자 몸을 실시간으로 인식
+#### - 선택 자세에 맞는 사용자 맞춤 가이드라인 제공
 
 
 ----
@@ -31,13 +31,13 @@
 ----
 
 ## - Requirements
-android gradle:0.9.+
-java jdk 1.6 +
+- android gradle:0.9.+
+- java jdk 1.6 +
 
 ----
 
 ## - Installation
-git clone https://github.com/EOM1224/WowU.git 
+- git clone https://github.com/EOM1224/WowU.git 
 
 
 ----
