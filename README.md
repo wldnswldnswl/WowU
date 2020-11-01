@@ -1,7 +1,7 @@
 # WowU (Workout with U)
 
 ### - Summary
-![logo](https://user-images.githubusercontent.com/45230079/68108278-b7456b00-ff2a-11e9-931a-d9d0cb9ca14f.png)
+![logo](https://user-images.githubusercontent.com/45230079/68108278-b7456b00-ff2a-11e9-931a-d9d0cb9ca14f.png witdh="200px")
 
 #### > 인공지능을 이용한 홈트레이닝 자세교정 어플리케이션
 #### > Keypoint Detection을 이용해 사용자 몸을 실시간으로 인식
